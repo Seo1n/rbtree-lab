@@ -117,39 +117,36 @@ node_t *rbtree_insert(rbtree *t, const key_t key)
   // fix up
   while (z->parent->color == RBTREE_RED)
   {
-      node_t *gp = z->parent->parent;
-      // uncle node
-      y = gp->right;
-      
+    node_t *gp = z->parent->parent;
+    // uncle node
+    y = gp->right;
 
     if (z->parent == gp->left)
     {
-      
-    
+
       if (y->color == RBTREE_RED)
       {
         z->parent->color = RBTREE_BLACK;
         y->color = RBTREE_BLACK;
         gp->color = RBTREE_RED;
         z = gp;
-        
       }
       else
       {
-      
+
         if (z == z->parent->right)
         {
           z = z->parent;
           left_rotate(t, z);
         }
-      
+
         z->parent->color = RBTREE_BLACK;
         gp->color = RBTREE_RED;
         right_rotate(t, gp);
       }
     }
     else
-    { 
+    {
       y = gp->left;
       if (y->color == RBTREE_RED)
       {
@@ -223,21 +220,19 @@ node_t *tree_minimum(const rbtree *t, node_t *x)
   return x;
 }
 
-// 이식하는 함수
-// 서브 트리 이동을 위해 노드가 u가 루트인 서브트리를 노드 v가 루트인 서브트리로 교체
 void transplant(rbtree *t, node_t *u, node_t *v)
 {
   if (u->parent == t->nil)
-  {              // u의 부모가 nil 즉, u가 루트노드라면
-    t->root = v; // v를  트리의 루트노드로 삼는다.
+  {
+    t->root = v;
   }
   else if (u == u->parent->left)
-  {                      // u가 부모의 왼쪽 자식일 경우
-    u->parent->left = v; // v를 왼쪽 자식으로 이식 (u를 대체)
+  {
+    u->parent->left = v;
   }
   else
-  {                       // 오른쪽 자식일 경우
-    u->parent->right = v; // v를 오른쪽 자식으로 이식
+  {
+    u->parent->right = v;
   }
   v->parent = u->parent;
 }
@@ -365,7 +360,6 @@ int rbtree_erase(rbtree *t, node_t *z)
   }
   free(z);
   return 0;
-  // erase 끝
 }
 int inorder(const rbtree *t, node_t *p, key_t *arr, const size_t n, int i)
 {
